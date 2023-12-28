@@ -1,22 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Stopwatch</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
-    
-</head>
-<body>
-    <div class="container">
-        <h1>STOPWATCH</h1>
-        <p class="time">
-            <span id="minutes">00</span>:<span id="seconds">00</span>:<span id="miliseconds">00</span>
-        </p>
-        <button id="start">Start</button>
-        <button id="stop">Stop</button>
-        <button id="reset">Reset</button>
-    </div>
-</body>
+  </head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Poppins&family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  
+  <body>
+    <center>
+      <div class="container">
+        <div class="header">
+          <h1>STOPWATCH</h1>
+        </div>
+        <div class="watch">
+          <div class="circle">
+            <div class="inner">
+              <p class="timerDisplay" id="timerHrs">00</p> :
+              <p class="timerDisplay" id="timerMins">00</p> :
+              <p class="timerDisplay" id="timerSec">00</p> :
+              <p class="timerDisplay" id="timerMilisec">00</p> 
+            </div>
+          </div>
+          <div class="cont2">
+            <div class="button-wrapper">
+              <button class="button play" id="startBtn" onclick="startStop()">
+                Start
+              </button>
+              <button
+                class="button reset hidden"
+                id="resetBtn"
+                onclick="reset()">
+                Reset
+              </button>
+              <button class="button lap hidden" id="lapBtn" onclick="lap()">
+                Lap
+              </button>
+            </div>
+          </div>
+          <h2>LAPS</h2>
+          <div class="laps" id="laps">
+            <p id="lapRecord"></p>
+          </div>
+        </div>
+      </div>
+    </center>
+  </body>
+  <script src="script.js">
+  </script>
 </html>

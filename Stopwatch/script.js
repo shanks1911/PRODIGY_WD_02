@@ -1,59 +1,95 @@
-window.onload = function () {
-    let minutes = 0;
-    let seconds = 0;
-    let miliseconds = 0;
-    let appendMinutes = document.querySelector('#minutes');
-    let appendMiliseconds = document.querySelector('#miliseconds');
-    let appendSeconds = document.querySelector('#seconds');
-    let startBtn = document.querySelector('#start');
-    let stopBtn = document.querySelector('#stop');
-    let resetBtn = document.querySelector('#reset');
-    let Interval;
+let hours = 0;
+let minutes = 0;
+let seconds = 0;
+let miliseconds = 0;
 
-    const startTimer = () => {
-      miliseconds++;
-      if (miliseconds <= 9) {
-        appendMiliseconds.innerHTML = '0' + miliseconds;
+let displayHours = hours;
+let displaySec = seconds;
+let displayMins = minutes;
+let displayMilisec = miliseconds;
+
+let status = "stopped";
+
+let interval = null;
+let lapNow = null;
+
+function start() {
+  miliseconds++;
+
+  if (miliseconds / 100 == 1) {
+    seconds++;
+    miliseconds = 0;
+    if (seconds / 60 == 1) {
+      minutes++;
+      seconds = 0;
+      if (minutes / 60 == 1) {
+        hours++;
+        minutes = 0;
       }
-      if (miliseconds > 9) {
-        appendMiliseconds.innerHTML = miliseconds;
-      }
+    }
+  }
 
-      if (miliseconds > 99) {
-        seconds++;
-        appendSeconds.innerHTML = '0' + seconds;
-        miliseconds = 0;
-        appendMiliseconds.innerHTML = '0' + 0;
-      }
+  if (miliseconds < 10) {
+    displayMilisec = "0" +miliseconds;
+  } else {
+    displayMilisec = miliseconds;
+  }
 
-      if (seconds > 9) {
-        appendSeconds.innerHTML = seconds;
-      }
+  if (seconds < 10) {
+    displaySec = "0" +seconds;
+  } else {
+    displaySec = seconds;
+  }
 
-      if (seconds > 59) {
-        minutes++;
-        appendMinutes.innerHTML = '0' + minutes;
-        seconds = 0;
-        appendSeconds.innerHTML = '0' + 0;
-      }
-    };
+  if (minutes < 10) {
+    displayMins = "0" +minutes;
+  } else {
+    displayMins = minutes;
+  }
+  if (hours < 10) {
+    displayHours = "0" + hours;
+  } else {
+    displayHours = hours;
+  }
 
-    startBtn.onclick = () => {
-      clearInterval(Interval);
-      Interval = setInterval(startTimer, 10);
-    };
+  document.getElementById("timerHrs").innerHTML = displayHours;
+  document.getElementById("timerSec").innerHTML = displaySec;
+  document.getElementById("timerMins").innerHTML = displayMins;
+  document.getElementById("timerMilisec").innerHTML = displayMilisec;
+}
 
-    stopBtn.onclick = () => {
-      clearInterval(Interval);
-    };
+function startStop() {
+  if (status === "stopped") {
+    interval =window.setInterval(start, 10);
+    status = "started";
+    document.getElementById('startBtn').innerHTML = "Stop";
+  } else {
+    window.clearInterval(interval);
+    status = "stopped";
+    document.getElementById('startBtn').innerHTML = "Start";
+  }
+}
 
-    resetBtn.onclick = () => {
-      clearInterval(Interval);
-      miliseconds = '00';
-      seconds = '00';
-      minutes = '00';
-      appendMiliseconds.innerHTML = miliseconds;
-      appendSeconds.innerHTML = seconds;
-      appendMinutes.innerHMTL = minutes;
-    };
-  };
+function reset(){
+  window.clearInterval(interval);
+
+  miliseconds = 0;
+  seconds = 0;
+  minutes = 0;
+  hours = 0;
+  displayMilisec = 0;
+  displayMins = 0;
+  displaySec = 0;
+  status = "stopped";
+  document.getElementById('timerHrs').innerHTML = "00";
+  document.getElementById('timerSec').innerHTML = "00";
+  document.getElementById('timerMins').innerHTML = "00";
+  document.getElementById('timerMilisec').innerHTML = "00";
+  document.getElementById('lapRecord').innerHTML = "";
+
+}
+
+function lap(){
+  lapNow = displayHours + " : " + displayMins + " : " + displaySec + " : " + displayMilisec
+  document.getElementById('lapRecord').innerHTML = document.getElementById('lapRecord').innerHTML + "<p>" + lapNow + "</p>";
+}
